@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/buttonParmakIzi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="İnit ve  Parmak izi"
+            android:textSize="18dp"/>
+
+
+        <Button
+            android:id="@+id/buttonSkew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="Skew"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/buttonBeginActivation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="BeginActivation"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/buttonCompleteActivation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="CompleteActivation"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/buttonCompleteActivationDeneme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="CompleteActivationDeneme Get Account"
+            android:textSize="18dp"/>
+
+
+
+
+        <Button
+            android:id="@+id/buttonAccountList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="buttonAccountList"
+            android:textSize="18dp"
+            />
+
+
+        <Button
+            android:id="@+id/buttonGetPinCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="buttonGetPinCode"
+            android:textSize="18dp"/>
+
+
+        <Button
+            android:id="@+id/buttonRemoveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="removeAccount"
+            android:textSize="18dp"/>
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
