@@ -13,7 +13,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
 
-class SecureDataManager(private val context: Context) {
+internal class SecureDataManager(private val context: Context) {
 
     private val aliasPrefix = "optimuspass_"
     private lateinit var secretKey: SecretKey
@@ -43,7 +43,7 @@ class SecureDataManager(private val context: Context) {
     }
 
     //  bu tek bir müşterinin secretkeyine ulaşmak için
-    fun getCustomerSecretKey(customerNo: String): String? {
+    fun getCustomerSecretKey(customerNo: String): String {
 
         val encryptedData = getAccount(customerNo)
 
@@ -62,7 +62,7 @@ class SecureDataManager(private val context: Context) {
 
             return decryptedKey
         }
-        return null
+        return ""
     }
 
 
@@ -221,11 +221,10 @@ class SecureDataManager(private val context: Context) {
     }
 
     companion object {
-        // bunların hepsi private olacak sonra düzelt
-         const val ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
-         const val BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC
-         const val PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
-         const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
+        private const val ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
+        private const val BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC
+        private const val PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
+        private const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
     }
 }
 

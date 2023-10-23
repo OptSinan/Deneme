@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ServiceManager(baseUrl: String) {
+internal  class ServiceManager(baseUrl: String) {
 
     private val baseService: BaseService = BaseService(baseUrl)
     private val apiService: ApiService = baseService.createService(ApiService::class.java)

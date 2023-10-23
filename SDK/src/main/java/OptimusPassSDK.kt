@@ -1,4 +1,3 @@
-// bu kullanılacak
 import Data.AccountListRequest
 import Data.BeginActivationRequest
 import Data.CheckDateRequest
@@ -8,6 +7,7 @@ import Data.GetPinCodeRequest
 import Helpers.SdkHelpers
 import Helpers.SecureDataManager
 import Services.Network.ServiceManager
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import java.net.URI
 import java.text.SimpleDateFormat
@@ -29,12 +29,12 @@ class OptimusPassSDK private constructor() {
     private var password: String = ""
     private var identityNo: String = ""
     private var phoneNumber: String = ""
-    private var deviceType: String = "A"
+    private var deviceType: String = "A" //default Android Type
     private var deviceId: String = ""
     private var mobileAppVersion: String? = ""
-    lateinit var serviceManager: ServiceManager
+    private lateinit var serviceManager: ServiceManager
 
-    private var expirationMessage =
+    private var expirationMessageDefault =
         "Her hesap sadece bir cihaz ile eşleştirilebilir. Bu hesap başka bir cihaz ile eşleştirildi yada aktif değil. Yeniden tanımlama yapılması gerekmektedir."
 
     fun init(apiURL: String): OptPassResult {
@@ -58,7 +58,7 @@ class OptimusPassSDK private constructor() {
 
     suspend fun authenticate(
         permissionRequestMessage: String,
-        context: FragmentActivity,
+        context: Context,
     ): OptPassResult {
 
         if (!initCompleted) {
@@ -81,7 +81,7 @@ class OptimusPassSDK private constructor() {
     }
 
     suspend fun checkDateSkew(): SkewResult {
-        if (isAuthenticated) { //düzelt
+        if (!isAuthenticated) {
             throw NotAuthenticatedException("Biyometrik doğrulama yapılmadı! İşleme devam edebilmek için authenticate fonksiyonu çalıştırılmalıdır!")
         }
 
@@ -93,10 +93,9 @@ class OptimusPassSDK private constructor() {
 
         lateinit var skewResult: SkewResult
 
-        // APİ  http://metro.optimusyazilim.com.tr:9009/
 
         var response = suspendCoroutine<CheckDateResponse?> { continuation ->
-            ServiceManager("http://metro.optimusyazilim.com.tr:9009").handleChechDate(
+            serviceManager.handleChechDate(
                 CheckDateRequest(phoneDate)
             ) { it, errorMessage ->
 
@@ -126,8 +125,8 @@ class OptimusPassSDK private constructor() {
         deviceId: String,
         mobileAppVersion: String?
     ): OptPassResult {
-        // isAuthenticated kontrolü
-        if (isAuthenticated) {   //  ünlemi kaldırdın kontrol et
+
+        if (!isAuthenticated) {
             throw NotAuthenticatedException("Kullanıcı oturumu açık değil.")
         }
 
@@ -141,7 +140,7 @@ class OptimusPassSDK private constructor() {
         lateinit var optPassResult: OptPassResult
 
         var response = suspendCoroutine<OptPassResult?> { continuation ->
-            ServiceManager("http://metro.optimusyazilim.com.tr:9009").handleBeginActivation(
+            serviceManager.handleBeginActivation(
                 BeginActivationRequest(
                     this.username,
                     this.password,
@@ -171,16 +170,16 @@ class OptimusPassSDK private constructor() {
         return optPassResult
     }
 
-    suspend fun completeActivation(context: FragmentActivity, smsCode: String): OptPassResult {
-        // isAuthenticated kontrolü
-        if (isAuthenticated) {  // ünlemi kaldırdını onu kontrol et
+    suspend fun completeActivation(context: Context, smsCode: String): OptPassResult {
+
+        if (!isAuthenticated) {
             throw NotAuthenticatedException("Kullanıcı kimlik doğrulaması yapılmamış.")
         }
 
         lateinit var optPassResult: OptPassResult
 
         var response = suspendCoroutine<OptPassResult?> { continuation ->
-            ServiceManager("http://metro.optimusyazilim.com.tr:9009").handleCompleteActivation(
+            serviceManager.handleCompleteActivation(
                 CompleteActivationRequest(
                     this.username,
                     this.password,
@@ -214,10 +213,12 @@ class OptimusPassSDK private constructor() {
         return optPassResult
     }
 
-    // isExpired=true olduğunda expirationMessage parametresi de sabit bir değer taşır. Mesaj
-//değişikliği istenirse SDK’yı implemente eden UI projesinde yapılır.      ---------------------->>> bu kısmı en son yap   bunun için parametre eklenmeli
-    suspend fun accountList(context: FragmentActivity): AccountListResult {
-        if (isAuthenticated) {   // BUNU !   DEĞİŞTİRDİM SONRA DÜZELT
+
+    suspend fun accountList(
+        context: Context
+
+    ): AccountListResult {
+        if (!isAuthenticated) {
             throw NotAuthenticatedException("Kullanıcı kimlik doğrulaması yapılmamış.")
         }
 
@@ -226,7 +227,7 @@ class OptimusPassSDK private constructor() {
         val payload = localAccountList.joinToString(";") { "${it.customerNo}:${it.creationDate}" }
 
         val response = suspendCoroutine<AccountListResult> { continuation ->
-            ServiceManager("http://metro.optimusyazilim.com.tr:9009").handleAccountList(
+            serviceManager.handleAccountList(
                 AccountListRequest(payload)
             ) { it, errorMessage ->
                 if (it != null) {
@@ -247,7 +248,7 @@ class OptimusPassSDK private constructor() {
                                         customerNo = localItem.customerNo.toInt(),
                                         title = localItem.title ?: "",
                                         isExpired = true,
-                                        expirationMessage = expirationMessage
+                                        expirationMessage = expirationMessageDefault
                                     )
 
                                 } else {
@@ -288,19 +289,19 @@ class OptimusPassSDK private constructor() {
         return response
     }
 
-    suspend fun getPinCode(customerNo: Int, context: FragmentActivity): GetPinSDKResponse? {
+    suspend fun getPinCode(customerNo: Int, context: Context): GetPinSDKResponse? {
 
-        if (isAuthenticated) {   // BUNU !   DEĞİŞTİRDİM SONRA DÜZELT
+        if (!isAuthenticated) {
             throw NotAuthenticatedException("Kullanıcı kimlik doğrulaması yapılmamış.")
         }
 
         val localAccountSecretKey =
-            SecureDataManager(context).getCustomerSecretKey(customerNo.toString())   //string donusumunde sıkıntı cıkabilir kontrol ekle
+            SecureDataManager(context).getCustomerSecretKey(customerNo.toString())
 
         var pinSDKResponse: GetPinSDKResponse
 
         var response = suspendCoroutine<GetPinSDKResponse> { continuation ->
-            ServiceManager("http://metro.optimusyazilim.com.tr:9009").handleGetPinCode(
+            serviceManager.handleGetPinCode(
                 GetPinCodeRequest(customerNo)
             ) { it, errorMessage ->
 
@@ -308,9 +309,8 @@ class OptimusPassSDK private constructor() {
                     if (it.success) {
                         if (it.data.ReturnValue == 0) {
                             val pinCode = SdkHelpers().generatePinCode(
-                                customerNo, localAccountSecretKey!!, it.data.SURE.toDouble()
-                            )  //   !!   bunu kullandın kontrol et patlatabilir
-
+                                customerNo, localAccountSecretKey, it.data.SURE.toDouble()
+                            )
                             pinSDKResponse = GetPinSDKResponse(true, null, pinCode, it.data.SURE)
 
                         } else {
@@ -329,8 +329,8 @@ class OptimusPassSDK private constructor() {
         return response
     }
 
-    fun removeAccount(customerNo: String, context: FragmentActivity): OptPassResult {
-        if (isAuthenticated) {   // BUNU !   DEĞİŞTİRDİM SONRA DÜZELT
+    fun removeAccount(customerNo: String, context: Context): OptPassResult {
+        if (!isAuthenticated) {
             throw NotAuthenticatedException("Kullanıcı kimlik doğrulaması yapılmamış.")
         }
 
@@ -342,13 +342,6 @@ class OptimusPassSDK private constructor() {
                 success = false, errorMessage = "Hesap silinirken hata oluştu. İşlem başarısız."
             )
         }
-    }
-
-    // bu deneme amaclı silinecek gerek yok
-    fun customerSecretKeyDecrypted(context: FragmentActivity) {
-
-        val result = SecureDataManager(context).getCustomerSecretKey("3")
-        println("sdk deneme içi " + result.toString())
     }
 }
 

@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-class Repository(private val apiService: ApiService) {
+ internal class Repository( private val apiService: ApiService) {
 
     fun chechDate(checkDateRequest: CheckDateRequest): Call<CheckDateResponse> {
         return apiService.chechDate(checkDateRequest)

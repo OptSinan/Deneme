@@ -2,7 +2,7 @@ package Data
 
 import java.io.Serializable
 
-data class DataResp(
+ data class DataResp(
     val R1: List<R1List>,
     val Output: List<Output>
 ) : Serializable

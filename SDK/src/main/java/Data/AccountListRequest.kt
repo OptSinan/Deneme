@@ -2,6 +2,6 @@ package Data
 
 import java.io.Serializable
 
-data class AccountListRequest(
+ internal data class AccountListRequest(
     val HESAP_LISTESI: String
 ) : Serializable

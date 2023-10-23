@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface ApiService {
+  internal interface ApiService {
 
     @POST("/Pass/check-date")
     fun chechDate(@Body checkDateRequest: CheckDateRequest): Call<CheckDateResponse>

@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class BaseService(baseUrl: String?) { // bunu null able yaptın sonrasında bak değiştirmek gerekebilir
+ internal class BaseService(baseUrl: String) {
     private val retrofit: Retrofit
 
     init {
