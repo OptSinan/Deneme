@@ -11,90 +11,75 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <Button
+                android:id="@+id/buttonInit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="İnit Fun"
+                android:textSize="18dp" />
 
+            <Button
+                android:id="@+id/buttonBiometric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="Bimetrik Fun"
+                android:textSize="18dp" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+            <Button
+                android:id="@+id/buttonSkew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="Skew Funtion"
+                android:textSize="18dp" />
 
+            <Button
+                android:id="@+id/buttonBeginActivation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="BeginActivation Fun"
+                android:textSize="18dp" />
 
-        <Button
-            android:id="@+id/buttonParmakIzi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="İnit ve  Parmak izi"
-            android:textSize="18dp"/>
+            <Button
+                android:id="@+id/buttonCompleteActivation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="CompleteActivation Fun"
+                android:textSize="18dp" />
 
+            <Button
+                android:id="@+id/buttonAccountList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="AccountList Fun"
+                android:textSize="18dp" />
 
-        <Button
-            android:id="@+id/buttonSkew"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="Skew"
-            android:textSize="18dp"/>
+            <Button
+                android:id="@+id/buttonGetPinCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="GetPinCode Fun"
+                android:textSize="18dp" />
 
-        <Button
-            android:id="@+id/buttonBeginActivation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="BeginActivation"
-            android:textSize="18dp"/>
+            <Button
+                android:id="@+id/buttonRemoveAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="removeAccount Fun"
+                android:textSize="18dp" />
 
-        <Button
-            android:id="@+id/buttonCompleteActivation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="CompleteActivation"
-            android:textSize="18dp"/>
-
-        <Button
-            android:id="@+id/buttonCompleteActivationDeneme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="CompleteActivationDeneme Get Account"
-            android:textSize="18dp"/>
-
-
-
-
-        <Button
-            android:id="@+id/buttonAccountList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="buttonAccountList"
-            android:textSize="18dp"
-            />
-
-
-        <Button
-            android:id="@+id/buttonGetPinCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="buttonGetPinCode"
-            android:textSize="18dp"/>
-
-
-        <Button
-            android:id="@+id/buttonRemoveAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:text="removeAccount"
-            android:textSize="18dp"/>
-
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

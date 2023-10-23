@@ -1,13 +1,15 @@
 package com.example.optpasssdk
 
+
 import OptimusPassSDK
-import android.Manifest
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.optpasssdk.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,20 +20,30 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.buttonParmakIzi.setOnClickListener {
-            OptimusPassSDK.sharedInstance.init("http://info.esube.optimusyazilim.com.tr/webapi/")
+        binding.buttonInit.setOnClickListener {
+            val result1 =
+                OptimusPassSDK.sharedInstance.init("http://metro.optimusyazilim.com.tr:9009")
+
+            println("sonucu bu mainactivity INIT= " + result1 + " ++++")
+
+        }
+
+        binding.buttonBiometric.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 val result = OptimusPassSDK.sharedInstance.authenticate(
-                    "selam cınım dogrulama yapalım mı",
+                    "Biyometrik Doğrulama",
                     context = this@MainActivity
                 )
+                println("sonucu bu mainactivity Bimoetrik= " + result + " ++++")
             }
         }
+
 
         binding.buttonSkew.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 val result1 = OptimusPassSDK.sharedInstance.checkDateSkew()
-                println("sonucu bu mainactivity SKEW = "  + result1?.skew?.toString() + " ++++")
+                println("sonucu bu mainactivity SKEW Result = " +  result1 + "SKEW " + result1?.skew?.toString() + " ++++")
+
             }
         }
 
@@ -45,16 +57,9 @@ class MainActivity : AppCompatActivity() {
                     "dcfb99b0-4589-11ee-be56-0242ac120002",
                     "1"
                 )
-                println("sonucu bu mainactivity  " + result3?.toString() + " ++++")
+                println("sonucu bu mainactivity BEGİN  " + result3?.toString() + " ++++")
             }
         }
-
-        val r = applicationContext.checkSelfPermission(Manifest.permission.USE_FINGERPRINT)
-        val i = applicationContext.checkSelfPermission(Manifest.permission.USE_BIOMETRIC)
-        val c = applicationContext.checkSelfPermission(Manifest.permission.CAMERA)
-
-    // izin varmı kontrol ü   0 sa izin vardır
-        println("izinLER  USE_FINGERPRINT = $r  --  USE_BIOMETRIC  = $i    CAMERA = $c  ")
 
         binding.buttonCompleteActivation.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
@@ -66,22 +71,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.buttonCompleteActivationDeneme.setOnClickListener {
-            val result2 = OptimusPassSDK.sharedInstance.customerSecretKeyDecrypted(
-                this
-            )
-            println("sonucu bu mainactivity DECREPTED KEY  = " + result2?.toString() + " ++++")
-        }
 
-        binding.buttonRemoveAccount.setOnClickListener {
-            val result2 = OptimusPassSDK.sharedInstance.removeAccount("3", this)
-            println("sonucu bu mainactivity REMOVE ACCOUNT  " + result2?.toString() + " ++++")
-        }
 
         binding.buttonAccountList.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 val result2 = OptimusPassSDK.sharedInstance.accountList(
-                    this@MainActivity
+                    this@MainActivity,
                 )
                 println("sonucu bu mainactivity  ACCOUNT LİST " + result2?.toString() + " ++++")
             }
@@ -94,6 +89,12 @@ class MainActivity : AppCompatActivity() {
                 )
                 println("sonucu bu mainactivity  Pin kode  = " + result2?.toString() + " ++++")
             }
+        }
+
+
+        binding.buttonRemoveAccount.setOnClickListener {
+            val result2 = OptimusPassSDK.sharedInstance.removeAccount("3", this)
+            println("sonucu bu mainactivity REMOVE ACCOUNT  " + result2?.toString() + " ++++")
         }
     }
 }
