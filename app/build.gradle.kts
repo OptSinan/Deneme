@@ -22,8 +22,8 @@ android {
     }
 
     lint {
-        checkReleaseBuilds =false
-        abortOnError=false
+        checkReleaseBuilds = false
+        abortOnError = false
     }
 
     buildTypes {
@@ -58,9 +58,9 @@ android {
 
 dependencies {
 
-    implementation(project(":SDK"))  // direk sdk modulune ulaşır
+     implementation(project(":SDK"))  // direk sdk modulune ulaşır
 
-    //  implementation(files("libs/SDK-release.aar")) // libs klasörü üzerindeki .arr mödülünden alır
+    // implementation(files("libs/SDK-release.aar")) // libs klasörü üzerindeki .arr mödülünden alır
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
