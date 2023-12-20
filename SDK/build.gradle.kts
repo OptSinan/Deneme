@@ -56,8 +56,8 @@ project.afterEvaluate {
     publishing {
         publications {
             register<MavenPublication>("release") {
-                groupId = "com.my-company"
-                artifactId = "my-library"
+                groupId = "OptimusYazilim"
+                artifactId = "MobilAndroidPassSdk"
                 version = "1.0"
                 afterEvaluate {
                     from(components["release"])
